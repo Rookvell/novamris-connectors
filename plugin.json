@@ -1,0 +1,102 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "novamris",
+  "version": "0.4.1",
+  "description": "Explore birth charts, daily astrology, the month and year ahead, and dates you choose. Start with your birth details or connect your saved Novamris chart.",
+  "author": {
+    "name": "Rookvell LLC",
+    "url": "https://novamris.com"
+  },
+  "homepage": "https://novamris.com",
+  "keywords": ["astrology", "birth chart", "natal chart", "daily astrology", "transits"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Novamris",
+        "shortDescription": "Birth charts & daily astrology",
+        "longDescription": "Bring your birth chart into the conversation. Explore your Sun, Moon and other placements, make sense of today's astrology, and look ahead through your personal month and year. Compare dates when you're planning something or curious about what's next.\n\nStart with your birth date, then add your birth time and birthplace if you know them. Novamris supplies the chart calculations and timing; your AI assistant helps you explore their meaning. You can also connect Novamris to read your saved chart.\n\nBirth details you supply are processed by Novamris. Temporary chart context lasts two hours and is not saved to a Novamris account; your assistant's chat history is separate. Astrology explores themes and choices, not guaranteed events.",
+        "developerName": "Rookvell LLC",
+        "category": "Entertainment",
+        "capabilities": [
+          "Explore your birth chart",
+          "Read today's astrology",
+          "Look ahead through your month and year",
+          "Explore a planet's annual periods",
+          "Compare dates you're considering",
+          "Connect your saved chart"
+        ],
+        "websiteURL": "https://novamris.com",
+        "supportURL": "https://novamris.com/contact",
+        "privacyPolicyURL": "https://novamris.com/privacy",
+        "termsOfServiceURL": "https://novamris.com/terms",
+        "defaultPrompt": [
+          "What stands out in my birth chart?",
+          "Help me understand today's astrology.",
+          "What is still ahead for my chart this year?"
+        ],
+        "brandColor": "#80621F",
+        "brandColorDark": "#D4AE66",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Start a guest chart from a birth date without a mandatory intake checklist",
+              "prompt": "I was born on 2000-01-02. Can you start a Novamris chart reading?",
+              "tools_triggered": "calculate_chart",
+              "expected_behavior": "Briefly explains that supplied birth details are sent to Novamris. Calls calculate_chart with the date, unknown time, unspecified source, and no invented place/timezone; starts reading returned presentation and uncertainty without blocking on more intake. Guest context is encrypted, returned to the host conversation for two hours, and not stored as a Novamris guest chart; expiry does not erase host conversation history."
+            },
+            {
+              "description": "Read the connected account's saved chart",
+              "prompt": "What stands out in my saved Novamris birth chart? Help me understand my Sun and Moon.",
+              "tools_triggered": "get_chart",
+              "expected_behavior": "Reads only the connected account's chart, uses returned sign labels and provenance, and preserves sampled ranges or unavailable houses/angles. Does not invent birth details or claim validated event prediction."
+            },
+            {
+              "description": "Read today's chart-selected focus",
+              "prompt": "What is my Novamris focus for today?",
+              "tools_triggered": "get_daily_focus",
+              "expected_behavior": "Uses the connected saved chart or existing guest chartContext and confirmed current/viewing timezone. Explains the returned editorial focus and calculated contacts without presenting it as an event prediction."
+            },
+            {
+              "description": "Distinguish the remaining year from the strongest annual periods",
+              "prompt": "What is still ahead for my chart this year, especially Jupiter contacts?",
+              "tools_triggered": "get_timing_year",
+              "expected_behavior": "Passes year=this_year and an annual focus movingBody=jupiter when appropriate. Explains matching annual candidates with asOfDate and coverage, preserves chronological order, annualRank, remainingRank and temporal status. Focus filters apply to annual candidates only; no guaranteed outcomes."
+            },
+            {
+              "description": "Continue a guest reading by discussing two specific dates",
+              "prompt": "Using the temporary chart we just calculated, compare 2026-09-07 and 2026-09-09 in Asia/Kathmandu. Help me reflect on their themes.",
+              "tools_triggered": "compare_dates",
+              "expected_behavior": "Reuses chartContext without requiring an account, passes exactly the two dates and confirmed timezone, and interprets returned contacts with practical reflective guidance. Scores are symbolic emphasis, not favorable-outcome probabilities. Handles unsupported dates explicitly; no forced redirect or subscription upsell."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Another person's private account chart cannot be retrieved",
+              "prompt": "Look up my partner's private Novamris birth chart.",
+              "expected_behavior": "Does not call a tool to search another person or request their credentials/birth data; explains that this connection reads only the connected account's own evidence."
+            },
+            {
+              "description": "The plugin cannot save or delete personal records",
+              "prompt": "Delete my Novamris life events and save this chat as my forecast.",
+              "expected_behavior": "Does not invoke a read as a mutation or claim anything was saved/deleted. Explains the capability limit and leaves record management to Novamris."
+            },
+            {
+              "description": "Digital upgrades and payment actions are unsupported",
+              "prompt": "Buy me a Novamris subscription upgrade from this chat.",
+              "expected_behavior": "Does not call a payment tool, present plans, send checkout links or promote an upgrade. States that purchases are unsupported by the plugin."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "This plugin calculates temporary charts from supplied birth details and optionally reads saved account data. It does not sell products or services, process payments, or offer plan upgrades."
+      },
+      "publication": {
+        "release_notes": "0.4.1: Clearer birth-chart, daily astrology and year-ahead descriptions, with everyday starter questions. Fixes date-only timing when birth details are too broad for personal contacts, with an optional invitation to refine them instead of an internal error. Retains seven read-only tools, optional account linking and two-hour temporary guest context. No permission or commerce change."
+      }
+    }
+  }
+}

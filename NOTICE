@@ -1,0 +1,14 @@
+Novamris connector package
+Copyright (c) 2026 Rookvell LLC
+
+The MIT License in this package applies to Rookvell LLC's authored connector
+descriptors, instructions and documentation included in this package.
+
+The Novamris name, trademarks, logos and other brand assets, including
+assets/logo.png, are excluded from that MIT license. All rights in those
+materials are reserved. The MIT license does not grant trademark rights.
+
+The private Novamris application, hosted backend, customer data and datasets
+are not included in this package and are not licensed by this package's MIT
+License. Connecting to the hosted service does not grant rights to its
+implementation, data or datasets.

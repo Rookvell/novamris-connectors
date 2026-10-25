@@ -1,0 +1,14 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "com.novamris/novamris",
+  "title": "Novamris",
+  "description": "Birth charts, daily astrology and the month and year ahead, with optional saved-chart connection.",
+  "version": "0.4.1",
+  "websiteUrl": "https://novamris.com",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://app.novamris.com/mcp"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "name": "novamris",
+  "displayName": "Novamris",
+  "version": "0.4.1",
+  "description": "Explore birth charts, daily astrology, the month and year ahead, and dates you choose. Start with your birth details or connect your saved Novamris chart.",
+  "author": {
+    "name": "Rookvell LLC",
+    "url": "https://novamris.com"
+  }
+}
